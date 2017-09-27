@@ -1,0 +1,549 @@
+<h2>Introduction</h2>
+<p>In the following we will guide you through creating a simple Android application with embedding Sygic navigation engine through window in window style.<br />
+In this example we will develop a simple application, where you can type in an address string and through a custom button you can start navigation to that address.</p>
+
+
+<h2>Prepare your working environment <!-- XXXXXXXXXXXXXXXXXXXX --></h2>
+<p>For being able to compile your application you need to have <strong>Android Studio</strong> on your computer. If you don't have it please follow <a href="http://developer.android.com/sdk/index.html">Download Android Studio</a>.<br />
+As the key point you need to obtain <strong>Sygic library aar</strong>. You may retrieve it from the demo or relase Android package or contact your sales representative.<br />
+Not necessarily but we recommend first to test the compilation flow using the <strong>IntegDemo3D project</strong> within the Sygic SDK package. Check <a href="/hc/en-us/articles/206588989">Demo example installation</a>.</p>
+
+
+<h2>Create new project <!-- XXXXXXXXXXXXXXXXXXXX --></h2>
+<p>Let's start Android Studio and start the new project through <em>Start a new Android Studio project</em>,
+name the application e.g. <str>MyApp</em>,
+and name the package e.g. <em>com.sygic.example.hello3dwiw</em>.<br />
+Let's define the minimum SDK version <em>API 19</em>,
+and let's select the template <em>Empty Activity</em> <br/>
+The project is automatically populated with several files, while these are relevant:</p>
+<ul>
+<li><em>MainActivity.java</em>, which is the placeholder for application coding (<strong>java code</strong>)</li>
+<li><em>activity_main.xml</em>, which will define graphical look of application (<strong>layout form</strong>)</li>
+</ul>
+<p>The <strong>java code</strong> should be generated as follows:</p>
+<pre class="code-yellow">
+package com.sygic.example.hello3dwiw;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    }
+}
+</pre>
+<p>The <strong>layout form</strong> should be generated as follows:</p>
+<pre class="code-yellow">&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" &gt;
+
+    &lt;TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" /&gt;
+
+&lt;/RelativeLayout&gt;
+
+</pre>
+
+
+
+<h2>Include Sygic library <!-- XXXXXXXXXXXXXXXXXXXX --></h2>
+<p>Including Sygic library consists of three steps:</p>
+<ul>
+<li>import <strong>SygicLib.aar</strong> into the project from your SDK package<br />
+   Go through File -> New -> New Module -> Import jar -> Browse for SygicLib.aar
+   </li>
+<li>add project's library dependency to SygicLib.aar<br />
+   Right click on app, then Open Module Settings, then Dependencies, then SygicLib <br/>
+   </li>
+<li>add project's dependency to Google play services<br />
+   Right click on app, then Open Module Settings, then Dependencies, then com.google.android.gms.play-service:8.4.0 or newer version<br/>
+</li>
+</ul>
+
+<p>
+  The project should look as below.<br />
+  <div class="code-none"><img src="/hc/en-us/article_attachments/204361155/android_gs_projectfiles_3dwiw.png" alt="" /></div>
+<p>
+
+
+<h2>Define graphical look</h2>
+<p>As an example of the window-in-window look we can prepare the layout in such a way, that it splits the screen into 2 segments,<br/>
+one, which defines the UI interface for address input (<em>Editext edit1</em>) and the button, which triggers the navigation(<em>Button button1</em>) <br/>
+second, which prepares placeholder for Sygic navigation pannel (<em>FrameLayout sygicmap</em>). <br/>
+Thus we can modify the default generated layout to the following form</p>
+<pre class="code-yellow">&lt;RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="com.example.rcmar.mysygicwiw.MainActivity"
+    android:weightSum="1">
+
+    &lt;LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        android:layout_weight="0.35">
+
+        &lt;TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:textSize="20sp"
+            android:paddingBottom="30sp"
+            android:text="Hello World!" />
+
+        &lt;EditText
+            android:id="@+id/edit1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="E.g. deu,berlin,alexanderplatz,10" />
+
+        &lt;Button
+            android:id="@+id/button1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Navigate to Address" />
+
+    &lt;/LinearLayout>
+
+   &lt;LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="0dp"
+       android:layout_weight="0.65">
+
+       &lt;FrameLayout
+           android:id="@+id/sygicmap"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           &lt;fragment
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:name="com.sygic.example.wiwdemo3d.SygicNaviFragment"
+               android:layout_gravity="center_horizontal" />
+
+       &lt;/FrameLayout>
+
+    &lt;/LinearLayout>
+
+&lt;/LinearLayout>
+</pre>
+
+
+<h2>Modify AndroidManifest.xml</h2>
+
+<p>
+The following 3 modifications are needed:
+</p>
+<ul>
+<li>add tools:replace="icon, label, theme" into application section</li>
+<li>add android:configChanges="orientation|keyboardHidden|screenSize" into activity section</li>
+<li>optionally add application permissions</li>
+
+</ul>
+
+<p>The xml could look as follows:</p>
+<pre class="code-yellow">
+&lt;?xml version="1.0" encoding="utf-8"?>
+&lt;manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.sygic.example.wiwdemo3d">
+
+    &lt;uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    &lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    &lt;uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    &lt;uses-permission android:name="android.permission.CAMERA" />
+    &lt;uses-permission android:name="android.permission.READ_CONTACTS" />
+    &lt;uses-permission android:name="android.permission.CALL_PHONE" />
+    &lt;uses-permission android:name="android.permission.INTERNET" />
+    &lt;uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    &lt;application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="icon, label, theme">
+
+        &lt;activity android:name="com.sygic.example.hello3dwiw.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            >
+            &lt;intent-filter>
+                &lt;action android:name="android.intent.action.MAIN" />
+
+                &lt;category android:name="android.intent.category.LAUNCHER" />
+            &lt;/intent-filter>
+        &lt;/activity>
+    &lt;/application>
+
+&lt;/manifest>
+</pre>
+
+<h2>Code the application <!-- XXXXXXXXXXXXXXXXXXXX --></h2>
+
+<p>
+The following four modifications steps are minimum to be applied:
+</p>
+<ul>
+<li>define Sygic navigation UI framework by extending <em>MainActivity</em> class</li>
+<li>add <em>SygicNaviFragment</em> class into applicatiom</li>
+<li>add <em>SygicNaviCallback</em> class into application</li>
+<li>add Sygic API call to allow for navigation operation </li>
+<li>optionally add application permissions (required for API version 23 and higher) <br/>
+    Please check <a href="http://developer.android.com/training/permissions/requesting.html">Permissions management</a>
+</li>
+</ul>
+
+
+<h3>1. Define navigation UI framework<!-- yyyyyyyy --></h3>
+<p>
+The following code is the typical framework to pick when starting to write an application using Sygic Window in Window mode.<br/>
+The function <em>initUI()</em> instantiates Sygic navigation fragment and passes it into Fragment manager.<br/>
+The Sygic navigation then requires that the methods (<em>onCreateDialog, onPrepareDialog, onActivityResult</em>) are overriden with the code bellow. <br/>
+
+</p>
+
+<pre class="code-yellow">
+public class MainActivity extends AppCompatActivity
+{
+    private SygicNaviFragment fgm;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initUI();
+    }
+
+    private void initUI() {
+        setContentView(R.layout.activity_main);
+        fgm = new SygicNaviFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.sygicmap, fgm).commit();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        Dialog dlg = fgm.onCreateDialog(id);
+        if (dlg == null)
+            return super.onCreateDialog(id);
+        return dlg;
+    }
+
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        super.onPrepareDialog(id, dialog);
+        fgm.onPrepareDialog(id, dialog);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fgm.onActivityResult(requestCode, resultCode, data);
+    }
+
+}
+</pre>
+
+<h3>2. Add Sygic Navigation Fragment class<!-- yyyyyyyy --></h3>
+<p>
+The bare minimum required implementation of the SygicNaviFragment class should be as follows,
+i.e. defining start of navigation and setting callback reference within the <em>onResume()</em> method.
+</p>
+
+<pre class="code-yellow">
+import com.sygic.aura.embedded.SygicFragmentSupportV4;
+
+public class SygicNaviFragment extends SygicFragmentSupportV4 {
+
+    @Override
+    public void onResume() {
+        startNavi();
+        setCallback(new SygicNaviCallback(getActivity()));
+        super.onResume();
+    }
+}
+</pre>
+
+<h3>3. Add Sygic navigation callback class<!-- yyyyyyyy --></h3>
+<p>
+The implementation of the callback class is neccessary if we want to react on some navigation events.<br/>
+The callback class must be inherited from the Sygic <em>IAPiCallback</em> class.
+The basic implementation defines the constructor, through which the main activity reference is passed.<br/>
+And interestingly we need to fill the mandatory <em>onEvent</em> method, through which various events are coming from navigation and can be processed as desired.<br/>
+The example here shows the navigation exit event is captured, on which we close the whole application.
+</p>
+
+<pre class="code-yellow">
+import com.sygic.aura.embedded.IApiCallback;
+import com.sygic.sdk.api.events.ApiEvents;
+
+public class SygicNaviCallback implements IApiCallback {
+
+    private Activity mActivity;
+
+    public SygicNaviCallback(Activity activity) {
+        mActivity = activity;
+    }
+
+    @Override
+    public void onEvent(final int event, final String data) {
+        if(event == ApiEvents.EVENT_APP_EXIT) {
+            mActivity.finish();
+        }
+    }
+
+    @Override
+    public void onServiceConnected() {
+    }
+
+    @Override
+    public void onServiceDisconnected() {
+    }
+}
+</pre>
+
+<h3>4. Add navigation operation through API call</h3>
+<p>We will call the navigation function from the button click on our designed button through its <em>OnClick</em> method.<br />
+Inside <em>OnClick</em> we read the user typed address and use it in the API call <em>navigateToAddress</em>.<br />
+Here we use the API call using the thread mechanics.<br/>
+Thus the whole functionality can be defined by extending the <em>initUI()</em> function as follows.</p>
+
+<pre class="code-yellow">
+    private void initUI() {
+        setContentView(R.layout.activity_main);
+        fgm = new SygicNaviFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.sygicmap, fgm).commit();
+
+        final EditText address = (EditText)findViewById(R.id.edit1);
+
+        Button btn = (Button) findViewById(R.id.button1);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread() {
+                    public void run() {
+                        try {
+                            ApiNavigation.navigateToAddress(address.getText().toString(), false, 0, 5000);
+                        } catch (GeneralException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }
+        });
+
+    }
+</pre>
+
+<h2>Navigation resources</h2>
+<p>
+Finally we also need to copy Sygic Navigation resources into device file system, i.e. typically internal or external SD card.
+The resources are part of the package you obtain.
+The resources need to be copied into <em>SygicTruck</em> folder on the device. Example:
+</p>
+<pre class="code-blue">
+  sdcard\
+    SygicTruck\
+      Android\
+      Res\
+      Maps\
+</pre>
+<p>
+Sygic navigation will search for the <em>SygicTruck</em> folder to read resources.
+</p>
+
+<h3><strong>Attention</strong></h3>
+<p>
+When working on integrated demo you cannot mix Sygic Truck navigation releases from other sources (e.g. Google play),
+otherwise there will be a conflict on the resources, as they all points to SygicTruck folder, resulting in possible applications crashes.<br/>
+Moreover, it is important that the resources are aligned with the library version.
+Therefore it is strongly recommended that for an application development the resources and library are taken from the same release package.
+</p>
+
+
+<h2>Build and deploy application</h2>
+<h3><!-- XXXXXXXXXXXXXXXXXXXX --></h3>
+<p>Building the application is simple as clicking on <em>Run</em> button in Android Studio.<br />
+The result of the build process is generation of <em>MyApp.apk</em>, which is normally automatically deployed on your Android device and run.<br />
+Running the application should yield the following outcome.<br/>
+<div class="code-none"><img src="/hc/en-us/article_attachments/204361575/android_gs_running_3dwiw.png" alt="" /></div>
+</p>
+
+
+
+
+<h2>Full sample reference</h2>
+<h3><!-- XXXXXXXXXXXXXXXXXXXX --></h3>
+<p></p>
+<pre class="code-yellow">
+package com.sygic.example.hello3dwiw;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import com.sygic.sdk.api.ApiNavigation;
+
+import com.sygic.aura.utils.PermissionsUtils;
+import com.sygic.sdk.api.exception.GeneralException;
+
+public class MainActivity extends AppCompatActivity
+{
+    public static final String LOG_TAG = "hello3dwiw";
+
+    private SygicNaviFragment fgm;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if(PermissionsUtils.requestAllPermissions(this) == PackageManager.PERMISSION_GRANTED)
+        {
+            initUI();
+        }
+    }
+
+    private void initUI() {
+        setContentView(R.layout.activity_main);
+        fgm = new SygicNaviFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.sygicmap, fgm).commit();
+
+        final EditText address = (EditText)findViewById(R.id.edit1);
+
+        Button btn = (Button) findViewById(R.id.button1);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread() {
+                    public void run() {
+                        try {
+                            ApiNavigation.navigateToAddress(address.getText().toString(), false, 0, 5000);
+                        } catch (GeneralException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }
+        });
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        for(int res : grantResults) {
+            if(res != PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "You have to allow all permissions", Toast.LENGTH_LONG).show();
+                finish();
+                return;
+            }
+        }
+
+        // all permissions are granted
+        initUI();
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        Dialog dlg = fgm.onCreateDialog(id);
+        if (dlg == null)
+            return super.onCreateDialog(id);
+        return dlg;
+    }
+
+    @Override
+    protected void onPrepareDialog(int id, Dialog dialog) {
+        super.onPrepareDialog(id, dialog);
+        fgm.onPrepareDialog(id, dialog);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        fgm.onActivityResult(requestCode, resultCode, data);
+    }
+}
+
+// ------ class SygicNaviFragment ------
+
+package com.sygic.example.hello3dwiw;
+
+import com.sygic.aura.embedded.SygicFragmentSupportV4;
+
+public class SygicNaviFragment extends SygicFragmentSupportV4 {
+
+    @Override
+    public void onResume() {
+        startNavi();
+        setCallback(new SygicNaviCallback(getActivity()));
+        super.onResume();
+    }
+}
+
+// ------ class SygicNaviCallback ------
+
+package com.sygic.example.hello3dwiw;
+
+import android.app.Activity;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.sygic.aura.embedded.IApiCallback;
+import com.sygic.sdk.api.events.ApiEvents;
+
+public class SygicNaviCallback implements IApiCallback {
+
+    private Activity mActivity;
+
+    public SygicNaviCallback(Activity activity) {
+        mActivity = activity;
+    }
+
+    @Override
+    public void onEvent(final int event, final String data) {
+        if(event == ApiEvents.EVENT_APP_EXIT) {
+            mActivity.finish();
+        }
+
+        mActivity.runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        String str = "Hello Event";
+                        Toast.makeText(mActivity, str, Toast.LENGTH_SHORT).show();
+                    }
+                }
+        );
+
+    }
+
+    @Override
+    public void onServiceConnected() {
+        Log.d(MainActivity.LOG_TAG, "service connected");
+    }
+
+    @Override
+    public void onServiceDisconnected() {
+        Log.d(MainActivity.LOG_TAG, "service disconnected");
+    }
+}
+</pre>
