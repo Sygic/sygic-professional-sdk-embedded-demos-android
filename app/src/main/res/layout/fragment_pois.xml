@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                android:padding="16dp">
+
+    <TextView
+            android:id="@+id/tv_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category:"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <TextView
+            android:id="@+id/tv_pois"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_category"
+            android:layout_marginTop="8dp"
+            android:text="Pois:"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <ListView
+            android:id="@+id/pois_list"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_toRightOf="@+id/tv_pois"
+            android:layout_alignTop="@+id/tv_pois"
+            android:layout_above="@+id/btn_nearby"
+            android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <View android:id="@+id/strut"
+          android:layout_width="0dp"
+          android:layout_height="0dp"
+          android:layout_centerHorizontal="true"/>
+
+    <Button
+        android:id="@+id/btn_nearby"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_pois"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/spin1"
+        android:text="Nearby pois" />
+
+    <Spinner
+        android:id="@+id/spin1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btn_nearby"
+        android:layout_alignLeft="@+id/strut"
+        android:layout_alignRight="@+id/pois_list"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+</RelativeLayout>
