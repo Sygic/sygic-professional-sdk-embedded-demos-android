@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         sygicNaviFragment = new SygicNaviFragment();
 
-        if(PermissionsUtils.requestStartupPermissions(this) == PackageManager.PERMISSION_GRANTED)
+        if(PermissionsUtils.requestMinimalPermissions(this) == PackageManager.PERMISSION_GRANTED)
             initUI();
     }
 
