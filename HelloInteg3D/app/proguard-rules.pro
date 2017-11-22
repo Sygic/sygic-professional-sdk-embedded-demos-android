@@ -17,8 +17,6 @@
 #}
 -dontobfuscate
 -dontwarn java.awt.**
--dontwarn io.fabric.**
--dontwarn com.crashlytics.android.**
 -dontwarn com.facebook.**
 -dontwarn loquendo.tts.**
 -dontwarn com.google.android.**
@@ -29,8 +27,6 @@
 -keep class com.sygic.aura.sidebar.* {*;}
 -keep class com.sygic.sdk.api.** {*;}
 -keep class com.google.android.gms.**
--keep class com.flurry.** { *; }
--dontwarn com.flurry.**
 -keepattributes *Annotation*,EnclosingMethod,Signature
 -keepclasseswithmembers class * {
     public <init>(android.content.Context, android.util.AttributeSet, int);
