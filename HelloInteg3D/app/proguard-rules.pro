@@ -18,7 +18,6 @@
 -dontobfuscate
 -dontwarn java.awt.**
 -dontwarn com.facebook.**
--dontwarn loquendo.tts.**
 -dontwarn com.google.android.**
 -dontwarn com.sygic.aura.downloader.**
 -keep class com.sygic.aura.SygicMain {*;}
