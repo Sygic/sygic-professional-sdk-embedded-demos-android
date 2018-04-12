@@ -1,6 +1,5 @@
 
-IntegTemplate3D
-===============
+# IntegTemplate3D #
 
 Minimal (template) project for Sygic 3D integrated SDK app.
 

@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFragment = new Fragment[4];
 
-        if(PermissionsUtils.requestMinimalPermissions(this) == PackageManager.PERMISSION_GRANTED)
+        if(PermissionsUtils.requestStartupPermissions(this) == PackageManager.PERMISSION_GRANTED)
             initUI();
 
     }
