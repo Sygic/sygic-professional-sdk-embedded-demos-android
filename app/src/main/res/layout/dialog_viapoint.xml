@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlStart"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="5dp"
+    android:layout_marginBottom="20dp" >
+
+    <EditText
+        android:id="@+id/etLongVia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:hint="Longitude"
+        android:maxLength="8"
+        android:ems="10"
+        android:inputType="numberSigned" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/etLatVia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/etLongVia"
+        android:layout_below="@+id/etLongVia"
+        android:hint="Latitude"
+        android:maxLength="8"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <CheckBox
+        android:id="@+id/cbVisible"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etLatVia"
+        android:layout_marginLeft="5dp"
+        android:checked="true"
+        android:text="Visible" />
+
+</RelativeLayout>

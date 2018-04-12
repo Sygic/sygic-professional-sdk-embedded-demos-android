@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlStart"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="20dp" >
+
+    <TextView
+        android:id="@+id/tv0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start point"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/etLongStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv0"
+        android:ems="10"
+        android:hint="Longitude"
+        android:inputType="numberSigned" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/etLatStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/etLongStart"
+        android:layout_below="@+id/etLongStart"
+        android:ems="10"
+        android:hint="Latitude"
+        android:inputType="numberSigned" />
+
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etLatStart"
+        android:text="Stop point"
+        android:layout_marginLeft="5dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <EditText
+        android:id="@+id/etLongStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tv1"
+        android:ems="10"
+        android:hint="Longitude"
+        android:inputType="numberSigned" >
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/etLatStop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignLeft="@+id/etLongStop"
+        android:layout_below="@+id/etLongStop"
+        android:ems="10"
+        android:hint="Latitude"
+        android:inputType="numberSigned" />
+
+</RelativeLayout>
