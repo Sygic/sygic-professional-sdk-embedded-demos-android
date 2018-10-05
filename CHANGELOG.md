@@ -1,6 +1,10 @@
 
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
 
+### 13.8.5
+
+* `-dontobfuscate` rule is no longer contained in SygicLib's proguard
+
 
 ### 13.8.1
 
