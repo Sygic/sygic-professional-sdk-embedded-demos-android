@@ -4,6 +4,8 @@
 ### 13.8.5
 
 * `-dontobfuscate` rule is no longer contained in SygicLib's proguard
+* `"com_sygic_"` prefix has been added to SygicLib's resources to avoid potentional resource name conflicts with other libraries
+* it may be necessary to add `<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />` to your AndroidManifest.xml `<application>` tag
 
 
 ### 13.8.1
