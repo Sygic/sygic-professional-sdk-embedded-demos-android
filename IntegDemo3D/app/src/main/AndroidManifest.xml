@@ -3,8 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.sygic.integdemo3d">
 
-    <uses-sdk android:minSdkVersion="9" android:targetSdkVersion="23"/>
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
