@@ -1,6 +1,11 @@
 
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
 
+### 13.9.1
+
+* buildToolsVersion must be set to 28.0.3 or higher
+* minSdkVersion must be set to 15 or higher
+* version of your kotlin gradle plugin must be 1.3.0 or higher
 
 ### 13.8.6
 
