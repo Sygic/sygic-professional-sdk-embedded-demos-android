@@ -1,5 +1,8 @@
-
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
+
+### 13.9.3
+
+* multiDexEnabled must bet set to true in defaultConfig section of build.gradle app file
 
 ### 13.9.1
 
