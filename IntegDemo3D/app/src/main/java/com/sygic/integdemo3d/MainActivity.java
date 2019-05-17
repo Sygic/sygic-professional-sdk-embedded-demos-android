@@ -15,6 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 
 import android.view.KeyEvent;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.sygic.aura.embedded.SygicFragmentSupportV4;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         if(PermissionsUtils.requestStartupPermissions(this) == PackageManager.PERMISSION_GRANTED)
             initUI();
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void initUI() {
