@@ -5,14 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -32,7 +29,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.sygic.integdemo3d.SdkThread;
-import com.sygic.sdk.api.model.WayPoint;
 
 public class ItineraryFragment extends Fragment {
 

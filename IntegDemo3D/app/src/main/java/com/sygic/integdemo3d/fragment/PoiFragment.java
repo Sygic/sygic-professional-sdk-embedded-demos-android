@@ -4,15 +4,12 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
-import android.text.InputType;
-import android.util.Log;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AlertDialog;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -81,7 +78,7 @@ public class PoiFragment extends Fragment {
             @Override
             public void execSdkCommand() {
                 try {
-                    list = ApiPoi.getPoiCategoryList(MainActivity.API_CALL_TIMEOUT);
+                    list = ApiPoi.getPoiCategoryList(0);
                 } catch (GeneralException e) {
                     e.printStackTrace();
                 }
