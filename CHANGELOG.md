@@ -1,5 +1,10 @@
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
 
+### 13.9.6
+
+* migrated project to AndroidX, because there will be no more feature releases under the android.support packaging ( https://developer.android.com/topic/libraries/support-library/revisions#28-0-0 )
+* instructions to migrate an existing project to AndroidX using Android Studio : https://developer.android.com/jetpack/androidx/migrate#migrate
+
 ### 13.9.3
 
 * multiDexEnabled must bet set to true in defaultConfig section of build.gradle app file
