@@ -1,5 +1,23 @@
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
 
+### 13.9.9
+
+* Driving style is included in SygicLib. Following lines must be added to your build.gradle:
+```
+allprojects {
+    repositories {
+        ...
+        maven { url "https://public.repo.sygic.com/repository/maven-sygic-releases/" }
+    }
+}
+
+...
+dependencies {
+    ...
+    implementation 'com.sygic.driving:driving-lib:1.2.1'
+}
+```
+
 ### 13.9.6
 
 * migrated project to AndroidX, because there will be no more feature releases under the android.support packaging ( https://developer.android.com/topic/libraries/support-library/revisions#28-0-0 )
