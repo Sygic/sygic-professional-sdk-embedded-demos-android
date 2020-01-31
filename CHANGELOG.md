@@ -1,5 +1,13 @@
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
 
+### 20.0.0
+
+* Driving lib version should be updated to 1.2.5
+```
+    implementation 'com.sygic.driving:driving-lib:1.2.5'
+```
+
+
 ### 13.9.9
 
 * Driving style is included in SygicLib. Following lines must be added to your build.gradle:
