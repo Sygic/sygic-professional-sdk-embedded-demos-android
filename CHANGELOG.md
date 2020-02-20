@@ -2,9 +2,9 @@
 
 ### 20.0.0
 
-* Driving lib version should be updated to 1.2.5
+* Driving lib version should be updated to 1.2.8
 ```
-    implementation 'com.sygic.driving:driving-lib:1.2.5'
+    implementation 'com.sygic.driving:driving-lib:1.2.8'
 ```
 
 
