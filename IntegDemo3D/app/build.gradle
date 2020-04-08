@@ -7,8 +7,8 @@ android {
 
     defaultConfig {
         applicationId "com.sygic.integdemo3d"
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion 16
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -20,7 +20,7 @@ android {
             localProp.load(project.rootProject.file('local.properties').newDataInputStream())
             def keystoreSett = localProp.getProperty('keystore.settings', null)
             if (keystoreSett != null) {
-                File signFile = file(keystoreSett);
+                File signFile = file(keystoreSett)
                 if (signFile.exists()) {
                     Properties properties = new Properties()
                     properties.load(signFile.newDataInputStream())

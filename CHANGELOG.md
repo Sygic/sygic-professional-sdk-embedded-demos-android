@@ -1,5 +1,10 @@
 # Sygic 3D integrated SDK (SygicLib.aar) changelog
 
+### 20.1.1
+
+* minSdkVersion must be set to 16 or higher
+
+
 ### 20.0.0
 
 * Driving lib version should be updated to 1.2.8
