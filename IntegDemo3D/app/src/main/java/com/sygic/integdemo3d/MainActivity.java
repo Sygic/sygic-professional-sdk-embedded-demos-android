@@ -18,14 +18,17 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.sygic.aura.ResourceManager;
 import com.sygic.aura.embedded.SygicFragmentSupportV4;
 import com.sygic.aura.utils.PermissionsUtils;
 import com.sygic.integdemo3d.fragment.*;
 
+import org.jetbrains.annotations.NotNull;
+
 public class MainActivity extends AppCompatActivity {
 
     public static final int API_CALL_TIMEOUT    = 5000;
-    public static final String LOG_TAG = "ItegDemo3D";
+    public static final String LOG_TAG = "IntegDemo3D";
 
     private Fragment mFragment[];
 
@@ -36,9 +39,31 @@ public class MainActivity extends AppCompatActivity {
         mFragment = new Fragment[4];
 
         if(PermissionsUtils.requestStartupPermissions(this) == PackageManager.PERMISSION_GRANTED)
-            initUI();
+            checkSygicResources();
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+    }
+
+    private void checkSygicResources() {
+        ResourceManager resourceManager = new ResourceManager(this, null);
+        if(resourceManager.shouldUpdateResources()) {
+            Toast.makeText(this, "Please wait while Sygic resources are being updated", Toast.LENGTH_LONG).show();
+            resourceManager.updateResources(new ResourceManager.OnResultListener() {
+                @Override
+                public void onError(int errorCode, @NotNull String message) {
+                    Toast.makeText(MainActivity.this, "Failed to update resources: " + message, Toast.LENGTH_LONG).show();
+                    finish();
+                }
+
+                @Override
+                public void onSuccess() {
+                    initUI();
+                }
+            });
+        }
+        else {
+            initUI();
+        }
     }
 
     private void initUI() {
@@ -108,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // all permissions are granted
-        initUI();
+        checkSygicResources();
     }
 
     @Override

@@ -1,1 +1,1 @@
-include ':app', ':SygicLib'
+include ':app'
