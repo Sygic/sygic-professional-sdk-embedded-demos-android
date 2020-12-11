@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = "hello3dwiw";
 
     private SygicNaviFragment fgm;
+    private boolean uiInitialized = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUI() {
+
+        if(uiInitialized)
+            return;
+
+        uiInitialized = true;
+
         setContentView(R.layout.activity_main);
         fgm = new SygicNaviFragment();
         getSupportFragmentManager().beginTransaction().replace(R.id.sygicmap, fgm).commitAllowingStateLoss();
