@@ -17,13 +17,13 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/edit1"
+            android:id="@+id/editAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="E.g. deu,berlin,alexanderplatz,10" />
 
         <Button
-            android:id="@+id/button1"
+            android:id="@+id/btnNavigate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Navigate to Address" />
