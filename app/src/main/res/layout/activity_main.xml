@@ -40,12 +40,6 @@
            android:layout_width="match_parent"
            android:layout_height="match_parent">
 
-           <fragment
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:name="com.sygic.example.hello3dwiw.SygicNaviFragment"
-               android:layout_gravity="center_horizontal" />
-
        </FrameLayout>
 
     </LinearLayout>
