@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
         if (resourceManager.shouldUpdateResources()) {
             Toast.makeText(this, "Please wait while Sygic resources are being updated", Toast.LENGTH_LONG).show()
             resourceManager.updateResources(object : OnResultListener {
-                override fun onError(errorCode: Int, message: String) {
+                override fun onError(code: Int, message: String) {
                     Toast.makeText(this@MainActivity, "Failed to update resources: $message", Toast.LENGTH_LONG).show()
                     finish()
                 }
@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         for (res in grantResults) {
             if (res != PackageManager.PERMISSION_GRANTED) {
                 Toast.makeText(this, "You have to allow all permissions", Toast.LENGTH_LONG).show()
