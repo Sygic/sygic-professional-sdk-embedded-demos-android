@@ -6,6 +6,13 @@ android {
 
     namespace 'com.sygic.example.hello3dwiw'
 
+    // Disable bundle installer optimization for native libraries
+    packagingOptions {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+    }
+
     defaultConfig {
         applicationId "com.sygic.example.hello3dwiw"
         minSdkVersion 21
