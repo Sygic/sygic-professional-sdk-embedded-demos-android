@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.sygic.aura.ResourceManager
 import com.sygic.aura.ResourceManager.OnResultListener
 import com.sygic.aura.utils.PermissionsUtils
@@ -22,9 +24,14 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (PermissionsUtils.requestStartupPermissions(this) == PackageManager.PERMISSION_GRANTED) {
+        val permissions = PermissionsUtils.getAllPermissions(this)
+            .filter { ContextCompat.checkSelfPermission(this, it) == PackageManager.PERMISSION_DENIED }
+        if (permissions.isEmpty()) {
             checkSygicResources()
+        } else {
+            ActivityCompat.requestPermissions(this, permissions.toTypedArray(), 1111);
         }
+
     }
 
     private fun checkSygicResources() {
@@ -46,6 +53,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun switchToAnotherFragment() {
+        val fragment = AnotherFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.sygicmap, fragment).commit()
+    }
+
+    fun switchToSygicFragment() {
+        fgm = SygicNaviFragment()
+        supportFragmentManager.beginTransaction().replace(R.id.sygicmap, fgm!!).commit()
+    }
+
     private fun initUI() {
         if (uiInitialized)
             return
@@ -53,9 +70,10 @@ class MainActivity : AppCompatActivity() {
         uiInitialized = true
         setContentView(R.layout.activity_main)
 
-        fgm = SygicNaviFragment()
-        supportFragmentManager.beginTransaction().replace(R.id.sygicmap, fgm!!).commitAllowingStateLoss()
+        switchToSygicFragment()
 
+        findViewById<Button>(R.id.btnAnotherFragment).setOnClickListener { switchToAnotherFragment() }
+        findViewById<Button>(R.id.btnSygicFragment).setOnClickListener { switchToSygicFragment() }
         findViewById<Button>(R.id.btnNavigate).setOnClickListener {
             object : Thread() {
                 override fun run() {

@@ -10,7 +10,19 @@
     android:orientation="vertical"
     tools:context="com.sygic.example.hello3dwiw.MainActivity"
     android:weightSum="1">
-
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+    <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnAnotherFragment"
+            android:text="Another fragment"
+            />
+        <Button android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSygicFragment"
+            android:text="Sygic fragment"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

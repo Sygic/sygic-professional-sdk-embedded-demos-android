@@ -8,4 +8,9 @@ class SygicNaviFragment : SygicFragmentSupportV4() {
         setCallback(SygicNaviCallback(requireActivity()))
         super.onResume()
     }
+
+    override fun onPause() {
+        super.onPause()
+        setCallback(null)
+    }
 }
