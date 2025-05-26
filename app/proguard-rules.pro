@@ -35,3 +35,6 @@
 }
 
 -keep class com.sygic.aura.feature.http.* {*;}
+
+-dontwarn com.android.org.conscrypt.SSLParametersImpl
+-dontwarn org.apache.harmony.xnet.provider.jsse.SSLParametersImpl
