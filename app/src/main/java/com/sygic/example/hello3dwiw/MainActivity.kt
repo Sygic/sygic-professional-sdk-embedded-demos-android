@@ -7,10 +7,14 @@ import android.os.Bundle
 import android.view.KeyEvent
 import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import com.sygic.aura.ResourceManager
 import com.sygic.aura.ResourceManager.OnResultListener
 import com.sygic.aura.utils.PermissionsUtils
@@ -73,6 +77,20 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }.start()
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById<LinearLayout>(R.id.root)) { v, insets ->
+            val bars = insets.getInsets(
+                WindowInsetsCompat.Type.systemBars()
+                        or WindowInsetsCompat.Type.displayCutout()
+            )
+            v.updatePadding(
+                left = bars.left,
+                top = bars.top,
+                right = bars.right,
+                bottom = bars.bottom,
+            )
+            WindowInsetsCompat.CONSUMED
         }
     }
 
