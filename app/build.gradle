@@ -71,8 +71,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.8.0'
-//    implementation 'com.sygic.fleet:embedded-with-res:25.0.3'
-    implementation 'com.sygic.fleet:embedded-debug-local:+'
+    implementation 'com.sygic.fleet:embedded-with-res:25.0.3'
+//    implementation 'com.sygic.fleet:embedded-debug-local:+'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
