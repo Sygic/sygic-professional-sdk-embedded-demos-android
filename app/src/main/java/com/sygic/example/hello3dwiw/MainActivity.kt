@@ -74,10 +74,18 @@ class MainActivity : AppCompatActivity() {
         uiInitialized = true
         setContentView(R.layout.activity_main)
 
+        val buttonSygic = findViewById<Button>(R.id.btnSygicFragment)
+        val buttonAnother = findViewById<Button>(R.id.btnAnotherFragment)
+
+        supportFragmentManager.addFragmentOnAttachListener { _, fragment ->
+            buttonSygic.isEnabled = fragment is AnotherFragment
+            buttonAnother.isEnabled = fragment is SygicNaviFragment
+        }
+
         switchToSygicFragment()
 
-        findViewById<Button>(R.id.btnAnotherFragment).setOnClickListener { switchToAnotherFragment() }
-        findViewById<Button>(R.id.btnSygicFragment).setOnClickListener { switchToSygicFragment() }
+        buttonAnother.setOnClickListener { switchToAnotherFragment() }
+        buttonSygic.setOnClickListener { switchToSygicFragment() }
         findViewById<Button>(R.id.btnNavigate).setOnClickListener {
             object : Thread() {
                 override fun run() {
