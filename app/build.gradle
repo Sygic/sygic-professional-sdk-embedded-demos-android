@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdk 34
+    compileSdk 35
 
     namespace 'com.sygic.example.hello3dwiw'
 
@@ -16,15 +16,15 @@ android {
     defaultConfig {
         applicationId "com.sygic.example.hello3dwiw"
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdk 35
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     signingConfigs {
@@ -60,20 +60,26 @@ android {
             signingConfig signingConfigs.release
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+//    implementation fileTree(include: ['*.jar'], dir: 'libs')
     testImplementation 'junit:junit:4.13.2'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'com.google.android.material:material:1.8.0'
-    implementation 'com.sygic.fleet:embedded-with-res:24.3.2'
+    implementation 'com.sygic.fleet:embedded-with-res:25.0.3'
     implementation 'com.android.support.constraint:constraint-layout:2.0.4'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.10'
+}
+
+configurations {
+    all {
+        exclude group: 'org.json', module: 'json'
+    }
 }
 
