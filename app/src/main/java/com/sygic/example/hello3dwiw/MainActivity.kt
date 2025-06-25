@@ -5,6 +5,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.KeyEvent
+import android.widget.Button
+import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +15,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.input.rememberTextFieldState
+import androidx.compose.foundation.layout.safeDrawingPadding
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -22,11 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updatePadding
 import androidx.fragment.compose.AndroidFragment
+import androidx.lifecycle.lifecycleScope
 import com.sygic.aura.ResourceManager
 import com.sygic.aura.ResourceManager.OnResultListener
 import com.sygic.aura.utils.PermissionsUtils
 import com.sygic.sdk.api.ApiNavigation.navigateToAddress
+import com.sygic.sdk.api.exception.GeneralException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -68,48 +79,63 @@ class MainActivity : AppCompatActivity() {
             return
 
         uiInitialized = true
-        fgm = SygicNaviFragment()
 
+        initWithCompose()
+//        initWithView()
+
+    }
+
+    private fun initWithCompose() {
         setContent {
-            val addressState = rememberTextFieldState()
             val addressValue = remember { mutableStateOf("") }
 
             MaterialTheme {
-                Column(modifier = Modifier.fillMaxSize()) {
+                Column(modifier = Modifier.fillMaxSize().safeDrawingPadding()) {
                     OutlinedTextField(
-                        modifier = Modifier.fillMaxWidth().padding(16.dp, 8.dp, 16.dp, 8.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp, 8.dp, 16.dp, 8.dp),
                         label = { Text("Address") },
                         value = addressValue.value,
                         onValueChange = { addressValue.value = it }
                     )
-                    androidx.compose.material3.Button(
-                        modifier = Modifier.fillMaxWidth().padding(16.dp, 0.dp, 16.dp, 8.dp),
-                        onClick = { navigateToAddress(addressValue.value, false, 0, 5000) }
+                    Button(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp, 0.dp, 16.dp, 8.dp),
+                        onClick = {
+                            lifecycleScope.launch(Dispatchers.IO) {
+                                navigateToAddress(addressValue.value, false, 0, 5000)
+                            }
+                        }
                     ) {
                         Text("Navigate to Address")
                     }
-                   AndroidFragment<SygicNaviFragment>(modifier = Modifier.fillMaxSize())
+                    AndroidFragment<SygicNaviFragment>(modifier = Modifier.fillMaxSize()) { fgm = it }
                 }
             }
         }
-//        setContentView(R.layout.activity_main)
+    }
 
-//        supportFragmentManager.beginTransaction().replace(R.id.sygicmap, fgm!!).commitAllowingStateLoss()
+    private fun initWithView() {
+        setContentView(R.layout.activity_main)
+        fgm = SygicNaviFragment()
 
-       /* findViewById<Button>(R.id.btnNavigate).setOnClickListener {
+        supportFragmentManager.beginTransaction().replace(R.id.sygicmap, fgm!!).commitAllowingStateLoss()
+        findViewById<Button>(R.id.btnNavigate).setOnClickListener {
             object : Thread() {
                 override fun run() {
                     try {
                         val address = findViewById<EditText>(R.id.editAddress).text.toString()
-                        ApiNavigation.navigateToAddress(address, false, 0, 5000)
+                        navigateToAddress(address, false, 0, 5000)
                     } catch (e: GeneralException) {
                         e.printStackTrace()
                     }
                 }
             }.start()
-        }*/
+        }
 
-        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById<LinearLayout>(R.id.root)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById<LinearLayout>(R.id.root)) { v, insets ->
             val bars = insets.getInsets(
                 WindowInsetsCompat.Type.systemBars()
                         or WindowInsetsCompat.Type.displayCutout()
@@ -121,7 +147,7 @@ class MainActivity : AppCompatActivity() {
                 bottom = bars.bottom,
             )
             WindowInsetsCompat.CONSUMED
-        }*/
+        }
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
@@ -151,6 +177,7 @@ class MainActivity : AppCompatActivity() {
         super.onNewIntent(intent)
         fgm!!.onNewIntent(intent)
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         fgm?.onActivityResult(requestCode, resultCode, data)
