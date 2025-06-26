@@ -38,6 +38,7 @@ import com.sygic.sdk.api.ApiNavigation.navigateToAddress
 import com.sygic.sdk.api.exception.GeneralException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
 
@@ -105,7 +106,13 @@ class MainActivity : AppCompatActivity() {
                             .padding(16.dp, 0.dp, 16.dp, 8.dp),
                         onClick = {
                             lifecycleScope.launch(Dispatchers.IO) {
-                                navigateToAddress(addressValue.value, false, 0, 5000)
+                                try {
+                                    navigateToAddress(addressValue.value, false, 0, 5000)
+                                } catch (e: Exception) {
+                                    withContext(Dispatchers.Main) {
+                                        Toast.makeText(this@MainActivity, e.message.toString(), Toast.LENGTH_LONG).show()
+                                    }
+                                }
                             }
                         }
                     ) {

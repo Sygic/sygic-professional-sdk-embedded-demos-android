@@ -20,8 +20,9 @@ android {
         targetSdk 35
         versionCode 1
         versionName "1.0"
-        multiDexEnabled true
+//        multiDexEnabled true
     }
+    kotlin { jvmToolchain(17) }
 
     buildFeatures {
         compose true
