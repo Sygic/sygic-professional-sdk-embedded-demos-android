@@ -22,7 +22,7 @@ allprojects {
     repositories {
         mavenCentral()
         google()
-        maven { url "https://public.repo.sygic.com/repository/maven-sygic-releases/" }
+        maven { url "https://repository.sygic.com/repository/maven-sygic-releases/" }
     }
 }
 
